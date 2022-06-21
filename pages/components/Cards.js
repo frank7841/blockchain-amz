@@ -21,7 +21,7 @@ const Cards=()=> {
         <div className={styles.cards}>
             {assets.map((item)=>{
               //  let asset = item.attributes
-               return <Card key={item.objectId} item={item.attributes}/>
+               return <Card key={item.id} item={item.attributes}/>
             })}        
         </div>
         

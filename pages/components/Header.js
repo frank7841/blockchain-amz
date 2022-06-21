@@ -2,9 +2,10 @@ import React, {useContext} from 'react';
 import { AmazonContext } from '../../context/amazonContext';
 import logo from '../../assets/amazon_logo_full.png';
 import Image from 'next/image';
-import {CgMenuGrido} from 'react-icons/cg'
-import {IomdSearch} from 'react-icons/io'
+import {CgMenuGridO} from 'react-icons/cg'
+import {IoMdSearch} from 'react-icons/io'
 import { FaCoins } from 'react-icons/fa';
+
 import{
     ModalProvider,
     Modal,
@@ -12,57 +13,80 @@ import{
     ModalTransition,
 
 } from 'react-simple-hook-modal'
+import 'react-simple-hook-modal/dist/styles.css';
 
-import 'react-simple-hook-modal/dist/styles.css'
-
-const {openModal, isModalOpen, closeModal }= useModal
+import BuyModal from './BuyModal'
 
 
-export const Header=()=> {
+
+
+
+ const Header=()=> {
+    
+    const styles={
+        container: `h-[60px] w-full flex items-center gap-5 px-16`,
+        logo: `flex items-center ml-[20px] cursor-pointer flex-1`,
+        search: `p-[25px] mr-[30px] w-[400px] h-[40px] bg-white rounded-full shadow-lg flex flex items-center border border-black`,
+        searchInput: `bg-transparent focus:outline-none border-none flex-1 items-center flex`,
+        menu: `flex items-center gap-6`,
+        menuItem: `flex items-center text-md font-bold cursor-pointer`,
+        coins: `ml-[10px]`,
+    }
+    const {balance}= useContext(AmazonContext)
+    const {openModal, isModalOpen, closeModal }= useModal();
+    //const balance='70';
+
   return (
-    <div className={styles.container}>
-        <div className={styles.logo}>
-            <Image
-                src={logo}
-                alt="Coin"
-                className="objectCover"
-                height={100}
-                width={100}/>
+      <ModalProvider>
+        <div className={styles.container}>
+            <div className={styles.logo}>
+                <Image
+                    src={logo}
+                    alt="Coin"
+                    className="object-cover"
+                    height={100}
+                    width={100}/>
+
+            </div>
+
+            <div className={styles.search}>
+                <input
+                type='text'
+                placeholder='Search Your Assests'
+                className={styles.searchInput}/>
+                <IoMdSearch fontSize={20}/>
+            </div>
+            <div className={styles.menu}>
+                <div className={styles.menuItem}>New Release</div>
+                <div className={styles.menuItem}>Featured</div>
+                {
+                    balance ?(
+                        <div className={(styles.balance, styles.menuItem)}
+                        onClick={openModal}>
+                            {balance}
+                            <FaCoins className={styles.coins}/>
+                            <Modal isOpen = {isModalOpen} transition ={ModalTransition.SCALE}>
+                                <BuyModal close={closeModal}/>
+                            </Modal>
+
+                        </div>
+                    ):(
+                        <div className={(styles.balance, styles.menuItem)}
+                            onClick={openModal}>
+                                0 FC <FaCoins className={styles.coins}/>
+                            <Modal isOpen={isModalOpen} transition={ModalTransition.SCALE}>
+                                    <BuyModal close={closeModal}/>
+                            </Modal>    
+                        </div>    
+                    
+                    )}
+                    <CgMenuGridO fontSize={30} className={styles.menuItem}/>
+            </div>
+
 
         </div>
-
-        <div className={styles.search}>
-            <input
-            type='text'
-            placeholder='Search Your Assests'
-            className={styles.serachInput}/>
-            <IomdSearch fontSize={20}/>
-        </div>
-        <div className={styles.menu}>
-            <div className={styles.menuItem}>New Release</div>
-            <div className={styles.menuItem}>Featured</div>
-            {
-                balance ?(
-                    <div className={(styles.balance, styles.menuItem)}
-                    onClick={openModal}>
-                        {balance}
-                        <FaCoins className={styles.coins}/>
-                        <Modal isOpen = {isModalOpen} transition ={ModalTransition.SCALE}>
-                            {/* <ByModal close={closeModal} byTokens= {buyTokens}/> */}
-                        </Modal>
-
-                    </div>
-                ):(
-                    <div className={(styles.balance, styles.menuItem)}>
-                        
-                    </div>    
-                
-                )}
-        </div>
-
-
-    </div>
+    </ModalProvider>    
   )
 }
 
-// export default Header
+ export default Header

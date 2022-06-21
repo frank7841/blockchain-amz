@@ -1,8 +1,11 @@
 import React, {useContext} from 'react'
 import { AmazonContext } from '../../context/amazonContext'
 import Cards from './Cards'
-import { Header } from './Header'
-const styles={
+import Featured from './Featured'
+import  Header  from './Header'
+
+const Main=()=> {
+  const styles={
     container: `h-full w-full flex flex-col mt-[50px] pr-[50px] overflow-hidden`,
     recentTitle: `text-2xl font-bold text-center mb-[20px] text-center mt-[40px]`,
     recentTransactionsList: `flex flex-col`,
@@ -10,14 +13,38 @@ const styles={
 
 }
 
-const Main=()=> {
-
+  const {recentTransactions}=useContext(AmazonContext)
+//recentTransactions=[1,2]
    
   return (
     <div className={styles.container}>
        <Header/>
-      {/* <Feature/>  */}
+      <Featured/> 
       <Cards/>  
+      {recentTransactions.length > 0 &&(
+        <h1 className={styles.recentTitle}>Recent Transaction</h1>
+      )}
+      {recentTransactions && recentTransactions.map((transaction, index)=>{
+        return(
+          <div key = {index} className={styles.recentTransactionsList}>
+            <div className={styles.transactionCard}>
+              <p>From: {transaction.attributes.from_address}</p>
+              <p>To:{transaction.attributes.to_address}</p>
+
+              <p>
+                Hash{''}
+                <a target={'-blank'}
+                  rel={'noopener norefer'}
+                  href={`https://rinkeby.etherscan.io.tx/${transaction.attributes.hash}`}>
+                    {transaction.attriutes.hash.slice(0,10 )}
+                  </a>
+              </p>
+              <p>Gas:{transaction.attributes.gas}</p>
+              </div>
+
+          </div>
+        )
+      })}
     </div>
   )
 }
