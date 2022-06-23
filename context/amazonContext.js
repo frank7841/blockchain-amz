@@ -8,7 +8,8 @@ export const AmazonProvider =({children}) =>{
     const [nickname, setNickname] = useState('')
     const [username, setUsername] = useState('')
     const [assets, setAssets]=useState([])
-    const [currentAccount, setCurrentAcount]= useState('')
+    const [currentAccount, setCurrentAccount]= useState('')
+    const [formattedAccount, setFormattedAccount]=useState('')
     const [tokenAmount,setTokenAmount ]=useState('')//ctr hw many tokens wanna req
     const[amountDue, setAmountDue]= useState('')
     const [etherScanLink, setEtherScanLink]=useState('');
@@ -39,6 +40,65 @@ export const AmazonProvider =({children}) =>{
         isLoading: userDataIsLoading,
        }=useMoralisQuery('_User')
 
+       useEffect(()=>{
+        (async function(){
+            await enableWeb3()
+            await getAssets()
+            await getOwnedAssets()
+        })()     
+     }, [userData,userDataIsLoading,assetsData, assetsDataIsLoading]) 
+     
+
+    //  useEffect(()=>{
+    //     ;(async()=>{
+    //         if (!isWeb3Enabled) {
+    //             await enableWeb3()
+    //           }
+    //         await listenToUpdates();
+    //         if(isAuthenticated){
+    //             getBalance();
+    //            // await listentoUptades();
+    //             const currentUsername = await user?.get('nickname')
+    //             setUsername(currentUsername)
+    //             const account = await user?.get('ethAddress')
+    //             setCurrentAcount(account)
+    //         }
+    //     })();
+
+    // }, [isAuthenticated, isWeb3Enabled,authenticate,  username, user, currentAccount, getBalance])
+    useEffect(() => {
+        (async()=>{
+        if (!isWeb3Enabled) {
+          await enableWeb3()
+        }
+        await listenToUpdates()
+    
+        if (isAuthenticated) {
+          await getBalance()
+          const currentUsername = await user?.get('nickname')
+          setUsername(currentUsername)
+          const account = await user?.get('ethAddress')
+          setCurrentAccount(account)
+          const formatAccount = account.slice(0, 5) + '...' + account.slice(-5)
+          setFormattedAccount(formatAccount)
+        } else {
+          setCurrentAccount('')
+          setFormattedAccount('')
+          setBalance('')
+        }
+    })()
+      }, [
+        isWeb3Enabled,
+        isAuthenticated,
+        balance,
+        setBalance,
+        authenticate,
+        currentAccount,
+        setUsername,
+        user,
+        username,
+      ])
+    
 
        const listenToUpdates = async() => {
         let query = new Moralis.Query('EthTransactions')
@@ -52,13 +112,6 @@ export const AmazonProvider =({children}) =>{
       }
 
 
-    useEffect(()=>{
-       (async function(){
-           await enableWeb3()
-           await getAssets()
-           await getOwnedAssets()
-       })()     
-    }, [assets,assetsData, assetsDataIsLoading]) 
     
 
     const getBalance = async()=>{
@@ -84,24 +137,6 @@ export const AmazonProvider =({children}) =>{
     }
     
 
-
-    useEffect(()=>{
-        ;(async()=>{
-            if (!isWeb3Enabled) {
-                await enableWeb3()
-              }
-            await listenToUpdates();
-            if(isAuthenticated){
-                getBalance();
-               // await listentoUptades();
-                const currentUsername = await user?.get('nickname')
-                setUsername(currentUsername)
-                const account = await user?.get('ethAddress')
-                setCurrentAcount(account)
-            }
-        })();
-
-    }, [isAuthenticated, isWeb3Enabled,authenticate,  username, user, currentAccount, getBalance])
 
     
 
@@ -214,6 +249,7 @@ export const AmazonProvider =({children}) =>{
                 isAuthenticated,
                 nickname,
                 setNickname,
+                formattedAccount,
                 username,
                 handleSetUsername,
                 assets,
