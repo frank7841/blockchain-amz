@@ -35,15 +35,16 @@ const BuyModal=({close})=> {
         buyTokens,
     }=useContext(AmazonContext)
 
-    useEffect(()=>{
-        calculatePrice()
-    },[tokenAmount,calculatePrice])
+ 
 
  const calculatePrice= () =>{
      const price = parseFloat(tokenAmount * 0.0001);
      price = price.toFixed(4);
      setAmountDue(price);
  }
+ useEffect(()=>{
+    calculatePrice()
+},[tokenAmount])
   return (  
     <div className={styles.container}>
         { isLoading ? (
