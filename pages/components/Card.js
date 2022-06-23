@@ -23,7 +23,7 @@ const Card=({item})=> {
     > 
         <div className={styles.card}>
             <Image
-                src={item.src} 
+                src = {item.src} 
                 className='object-cover object-center'
                 width={190}
                 height={250}

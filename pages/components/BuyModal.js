@@ -45,6 +45,7 @@ const BuyModal=({close})=> {
  useEffect(()=>{
     calculatePrice()
 },[tokenAmount])
+
   return (  
     <div className={styles.container}>
         { isLoading ? (
