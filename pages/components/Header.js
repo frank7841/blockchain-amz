@@ -68,7 +68,7 @@ import BuyModal from './BuyModal'
                                 <BuyModal close={closeModal}/>
                             </Modal>
 
-                        </div>
+                        </div> 
                     ):(
                         <div className={(styles.balance, styles.menuItem)}
                             onClick={openModal}>
