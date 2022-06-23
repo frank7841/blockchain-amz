@@ -13,7 +13,6 @@ import{
     ModalTransition,
 
 } from 'react-simple-hook-modal'
-import 'react-simple-hook-modal/dist/styles.css';
 
 import BuyModal from './BuyModal'
 

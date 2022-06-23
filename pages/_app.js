@@ -1,4 +1,6 @@
 import '../styles/globals.css'
+import 'react-simple-hook-modal/dist/styles.css';
+
 import { MoralisProvider } from 'react-moralis';
 import {AmazonProvider} from '../context/amazonContext'
 import {ModalProvider} from 'react-simple-hook-modal'

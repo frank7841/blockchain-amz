@@ -15,6 +15,7 @@ export const AmazonProvider =({children}) =>{
     const[isLoading, setIsLoading]= useState(false);
     const[balance, setBalance]=useState('');
     const [recentTransactions, setRecentTransactions]=useState([]);
+    const [ownedAssets, setOwnedAssets]=useState([])
     
     const {
         authenticate,
@@ -38,10 +39,24 @@ export const AmazonProvider =({children}) =>{
         isLoading: userDataIsLoading,
        }=useMoralisQuery('_User')
 
+
+       const listenToUpdates = async() => {
+        let query = new Moralis.Query('EthTransactions')
+        let subscription = await query.subscribe()
+        console.log("Listenning")
+        subscription.on('update', async object => {
+          console.log('New Transactions')
+          console.log(object)
+          setRecentTransactions([object])
+        })
+      }
+
+
     useEffect(()=>{
        (async function(){
            await enableWeb3()
            await getAssets()
+           await getOwnedAssets()
        })()     
     }, [assets,assetsData, assetsDataIsLoading]) 
     
@@ -67,17 +82,7 @@ export const AmazonProvider =({children}) =>{
         }
 
     }
-    const listenToUpdates = async () => {
-        let query = new Moralis.Query('EthTransactions')
-        let subscription = await query.subscribe()
-        console.log('listening')
-        subscription.on('update', async object => {
-          console.log('New Transactions')
-          console.log(object)
-          setRecentTransactions([object])
-        })
-      }
-
+    
 
 
     useEffect(()=>{
@@ -96,7 +101,7 @@ export const AmazonProvider =({children}) =>{
             }
         })();
 
-    }, [isAuthenticated, username, user, currentAccount, getBalance, listenToUpdates])
+    }, [isAuthenticated, isWeb3Enabled,authenticate,  username, user, currentAccount, getBalance])
 
     
 
@@ -189,6 +194,19 @@ export const AmazonProvider =({children}) =>{
 
     }
 
+    const getOwnedAssets = async()=>{
+        try {
+            if(userData[0]){
+                setOwnedAssets(previousItems=>[
+                    ...previousItems, userData[0].attributes.ownedAsset
+                ])
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return(
         <AmazonContext.Provider
@@ -212,6 +230,7 @@ export const AmazonProvider =({children}) =>{
                 buyTokens,
                 buyAssets,
                 recentTransactions,
+                ownedAssets
 
             }}
         >
