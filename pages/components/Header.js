@@ -5,7 +5,7 @@ import Image from 'next/image';
 import {CgMenuGridO} from 'react-icons/cg'
 import {IoMdSearch} from 'react-icons/io'
 import { FaCoins } from 'react-icons/fa';
-
+ 
 import{
     ModalProvider,
     Modal,
