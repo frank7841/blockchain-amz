@@ -13,6 +13,9 @@ import {AiOutlineHistory} from 'react-icons/ai'
 
 function Sidebar() {
     
+  const loaderProp =({ src }) => {
+    return src;
+}
 const styles={
     container: `h-full w-[300px] flex  flex-col bg-[#fff] static`,
     profile :`w-full py-16 flex flex-col justify-center items-center rounded-r-3xl bg-gradient-to-t from-[#0d141c] to-[#42667e] mt-[40px] mb-[50px] border-2 border-[#fb9701] `,
@@ -94,6 +97,7 @@ const styles={
               width={30}
               className={styles.amazonLogo}
               alt="logo"
+              loader={loaderProp}
             />
             My Amazon
             <br /> Board
