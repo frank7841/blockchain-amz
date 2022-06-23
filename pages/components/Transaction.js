@@ -5,6 +5,10 @@ import moment from 'moment'
 import { AmazonContext } from '../../context/amazonContext'
 
 const Transaction = ({ item }) => {
+
+  const loaderProp =({ src }) => {
+    return src;
+}
   const styles = {
     container: ` w-[70%] flex flex-col border-[#d6d7d9] border-2 rounded-lg shadow-lg`,
     top: `flex w-full h-[80px] bg-[#f0f1f3] p-[20px] pr-[80px] gap-[80px]`,
@@ -53,6 +57,7 @@ const Transaction = ({ item }) => {
                   alt='item'
                   height={100}
                   width={100}
+                  loader={loaderProp}
                 />
                 <div className={styles.nameContainer}>
                   <div className={styles.itemName}>{asset.name}</div>
