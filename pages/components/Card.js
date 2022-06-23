@@ -27,7 +27,7 @@ const Card=({item})=> {
                 className='object-cover object-center'
                 width={190}
                 height={250}
-                al='product'/>
+                alt='product'/>
         </div>
         <div className={styles.cardTitle}>{item.name}</div>
         <div className={styles.price}>

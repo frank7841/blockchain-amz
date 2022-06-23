@@ -93,6 +93,7 @@ const styles={
               height={30}
               width={30}
               className={styles.amazonLogo}
+              alt="logo"
             />
             My Amazon
             <br /> Board
