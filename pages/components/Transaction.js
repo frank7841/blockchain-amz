@@ -23,7 +23,7 @@ const Transaction = ({ item }) => {
 
   return (
     <>
-      {item.map((asset, index) => {
+      {item?.map((asset, index) => {
         return (
           <div className={styles.container} key={index}>
             <div className={styles.top}>
