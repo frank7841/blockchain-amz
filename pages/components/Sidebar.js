@@ -3,8 +3,8 @@ import { AmazonContext } from '../../context/amazonContext'
 import Image from 'next/image'
 import Link from 'next/link'
 import {ConnectButton} from 'web3uikit'
-import logo from '../../assets/amazon_logo.png';
-import logoFull from '../../assets/amazon_logo_full.png';
+import logo from '../../public/assets/amazon_logo.png';
+import logoFull from '../../public/assets/amazon_logo_full.png';
 import{FaBox} from 'react-icons/fa'
 import {BsFillBookmarkFill, BsFillPersonFill} from 'react-icons/bs'
 import {AiOutlineHistory} from 'react-icons/ai'
