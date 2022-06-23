@@ -37,7 +37,7 @@ const BuyModal=({close})=> {
 
     useEffect(()=>{
         calculatePrice()
-    },[tokenAmount])
+    },[tokenAmount,calculatePrice])
 
  const calculatePrice= () =>{
      const price = parseFloat(tokenAmount * 0.0001);
