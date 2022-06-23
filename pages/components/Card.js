@@ -12,6 +12,9 @@ const styles={
     coins: `ml-[10px]`,
 }
 const Card=({item})=> {
+  const loaderProp =({ src }) => {
+    return src;
+}
 
   const{ buyAssets }= useContext(AmazonContext)
   return (
@@ -27,7 +30,8 @@ const Card=({item})=> {
                 className='object-cover object-center'
                 width={190}
                 height={250}
-                alt='product'/>
+                alt='product'
+                loader={loaderProp}/>
         </div>
         <div className={styles.cardTitle}>{item?.name}</div>
         <div className={styles.price}>

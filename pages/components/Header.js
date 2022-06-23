@@ -22,6 +22,10 @@ import BuyModal from './BuyModal'
 
  const Header=()=> {
     
+    const loaderProp =({ src }) => {
+        return src;
+    }
+
     const styles={
         container: `h-[60px] w-full flex items-center gap-5 px-16`,
         logo: `flex items-center ml-[20px] cursor-pointer flex-1`,
@@ -44,7 +48,8 @@ import BuyModal from './BuyModal'
                     alt="Coin"
                     className="object-cover"
                     height={100}
-                    width={100}/>
+                    width={100}
+                    loader={loaderProp}/>
 
             </div>
 

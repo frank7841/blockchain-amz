@@ -123,7 +123,7 @@ const styles={
         </Link>
       </div>
       <div className={styles.companyName}>
-        <Image src={logoFull} alt='amazon' height={100} width={100} />
+        <Image src={logoFull} alt='amazon' height={100} width={100} loader={loaderProp} />
       </div>
     </div>
   )
